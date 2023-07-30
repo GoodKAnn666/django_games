@@ -4,6 +4,7 @@ from django.views.generic.base import View
 
 from .models import Game
 
+
 class GamesView(ListView):
     model = Game
     queryset = Game.objects.filter(draft=False)
