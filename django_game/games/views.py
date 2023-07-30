@@ -1,9 +1,15 @@
+from django.views.generic import ListView, DetailView
 from django.shortcuts import render
 from django.views.generic.base import View
 
 from .models import Game
 
-class GamesView(View):
-    def get(self, request):
-        games = Game.objects.all()
-        return render(request, "games/game_list.html", {"game_list": games})
+class GamesView(ListView):
+    model = Game
+    queryset = Game.objects.filter(draft=False)
+    template_name = "games/games_list.html"
+
+
+class GameDetailView(DetailView):
+    model = Game
+    slug_field = "url"

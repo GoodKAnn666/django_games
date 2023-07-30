@@ -1,3 +1,5 @@
+from audioop import reverse
+from django.urls import reverse
 from django.db import models
 
 class Category(models.Model):
@@ -37,6 +39,7 @@ class Genre(models.Model):
         verbose_name_plural = "Жанры"
 
 class Game(models.Model):
+    objects = None
     title = models.CharField("Название игры", max_length=100)
     tagline = models.CharField("Слоган", max_length=100, default='')
     description = models.TextField("Описание")
@@ -53,6 +56,9 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("game_detail", kwargs={"slug": self.url})
 
     class Meta:
         verbose_name = "Игра"
