@@ -345,15 +345,15 @@
                                 </li>
                                 <li style="list-style: none">
                                     <span><b>Разработчик:</b>
-                                        {{% for developer in game.developers.all %}}
+                                        {% for developer in game.developers.all %}
                                             {{ developer.name }}
-                                        {{% endfor %}}
+                                        {% endfor %}
                                     </span>
                                 </li>
                                 <li style="list-style: none"><span><b>Жанр:</b>
-                                    {{% for genre in game.genres.all %}}
+                                    {% for genre in game.genres.all %}
                                             {{ genre.name }}
-                                        {{% endfor %}}
+                                        {% endfor %}
                                     </span>
                                 </li>
                                 <li style="list-style: none"><span><b>Двигатель:</b> {{ game.engine }}</span>
@@ -407,8 +407,8 @@
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
-                        </div>
-                    </div>
+
+
                     <div class="row sub-para-w3layouts mt-5">
 
                         <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;">
@@ -507,9 +507,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
     </section>
     <!-- //contact -->
     <!-- footer -->
