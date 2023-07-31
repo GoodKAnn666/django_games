@@ -19,6 +19,11 @@ class Developer(models.Model):
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="Developers/")
 
+
+    def get_absolute_url(self):
+        return reverse("developer_detail", kwargs={"slug": self.name})
+
+
     def __str__(self):
         return self.name
 
@@ -47,7 +52,7 @@ class Game(models.Model):
     engine = models.CharField("Двигатель", max_length=100)
     preview = models.ImageField("Превью", upload_to="games/")
     developers = models.ManyToManyField(Developer, verbose_name="разработчик", related_name="game_developer")
-    year = models.DateField("Дата выхода")
+    year = models.PositiveSmallIntegerField("Дата выхода")
     genres = models.ManyToManyField(Genre, verbose_name="жанры")
     budget = models.PositiveIntegerField("Бюджет", default=0, help_text="указывать сумму в $")
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)

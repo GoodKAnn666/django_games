@@ -48,6 +48,8 @@ class DeveloperAdmin(admin.ModelAdmin):
     get_image.short_description = "Изображение"
 
 
+
+
 @admin.register(GameShorts)
 class GameShortsAdmin(admin.ModelAdmin):
     list_display = ("title", "games", "get_image")
