@@ -1,6 +1,17 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Category, Developer, Genre, Game, GameShorts, TopReating, Rating, Reviews
+from django import forms
+from .models import Category, Developer, Genre, Game, GameShorts, Rating, Reviews
+
+
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+
+class GameAdminForm(forms.ModelForm):
+    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
+    class Meta:
+        model = Game
+        fields = '__all__'
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -14,6 +25,7 @@ class GameAdmin(admin.ModelAdmin):
     list_filter = ("category",)
     search_fields = ("title", "category__name")
     list_editable = ("draft",)
+    form = GameAdminForm
 
 
 @admin.register(Reviews)
