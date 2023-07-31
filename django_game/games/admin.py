@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from .models import Category, Developer, Genre, Game, GameShorts, TopReating, Rating, Reviews
 
 @admin.register(Category)
@@ -27,16 +28,31 @@ class GenreAdmin(admin.ModelAdmin):
 
 @admin.register(Developer)
 class DeveloperAdmin(admin.ModelAdmin):
-    list_display = ("name", "description")
+    list_display = ("name", "description", "get_image")
+    readonly_fields = ("get_image",)
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} widht="100" height="100"')
+    get_image.short_description = "Изображение"
+
 
 @admin.register(GameShorts)
 class GameShortsAdmin(admin.ModelAdmin):
-    list_display = ("title", "games")
+    list_display = ("title", "games", "get_image")
+    readonly_fields = ("get_image",)
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} widht="100" height="100"')
+    get_image.short_description = "Изображение"
+
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
     list_display = ("ip", "game")
 
+
+admin.site.site_title = "Django Games"
+admin.site.site_header = "Django Games"
 
 # admin.site.register(Category)
 # admin.site.register(Developer)
