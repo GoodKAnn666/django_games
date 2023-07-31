@@ -478,11 +478,11 @@ mark,
 }
 
 .img-fluid {
-  max-width: 100%;
+  max-width: 103%;
   height: auto;
 }
 .img-game-shorts {
-  max-width: 220px;
+  max-width: 250px;
   height: auto;
 }
 .img-thumbnail {
