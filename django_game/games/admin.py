@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django import forms
-from .models import Category, Developer, Genre, Game, GameShorts, Rating, Reviews
+from .models import Category, Developer, Genre, Game, GameShorts, Rating, Reviews, TopReating
 
 
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -62,7 +62,11 @@ class GameShortsAdmin(admin.ModelAdmin):
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
-    list_display = ("ip", "game")
+    list_display = ("ip", "top", "game")
+
+
+admin.site.register(TopReating)
+
 
 
 admin.site.site_title = "Django Games"

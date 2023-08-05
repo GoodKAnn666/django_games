@@ -20,12 +20,12 @@ class Developer(models.Model):
     image = models.ImageField("Изображение", upload_to="Developers/")
 
 
-    def get_absolute_url(self):
-        return reverse("developer_detail", kwargs={"slug": self.name})
-
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("developer_detail", kwargs={"slug": self.name})
 
     class Meta:
         verbose_name = "Разработчик"
@@ -86,7 +86,7 @@ class TopReating(models.Model):
     value = models.SmallIntegerField("Значение", default=0)
 
     def __str__(self):
-        return self.value
+        return f'{self.value}'
 
     class Meta:
         verbose_name = "Топ рейтинга"
@@ -94,11 +94,11 @@ class TopReating(models.Model):
 
 class Rating(models.Model):
     ip = models.CharField("IP адрес", max_length=15)
-    star = models.ForeignKey(TopReating, on_delete=models.CASCADE, verbose_name="топ")
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, verbose_name="игра")
+    top = models.ForeignKey(TopReating, on_delete=models.CASCADE, verbose_name="топ")
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, verbose_name="игра", related_name="ratings")
 
     def __str__(self):
-        return f"{self.star} - {self.game}"
+        return f"{self.top} - {self.game}"
 
     class Meta:
         verbose_name = "Рейтинг"
