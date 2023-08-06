@@ -20,6 +20,7 @@ class GamesView(GenreYear, ListView):
     model = Game
     queryset = Game.objects.filter(draft=False)
     template_name = "games/game_list.html"
+    paginate_by = 2
 
 
 
@@ -52,6 +53,7 @@ class DeveloperView(GenreYear, DetailView):
 
 
 class FilterGamesView(GenreYear, ListView):
+    paginate_by = 1
     def get_queryset(self):
         if 'genre' in self.request.GET and 'year' in self.request.GET:
             print('if genre and year')
@@ -62,8 +64,16 @@ class FilterGamesView(GenreYear, ListView):
             print('else')
             queryset = Game.objects.filter(
                 Q(year__in=self.request.GET.getlist("year")) | Q(genres__in=self.request.GET.getlist("genre"))
-            )
+            ).distinct()
         return queryset
+
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["year"] = ''.join([f"year={x}&" for x in self.request.GET.getlist("year")])
+        context["genre"] = ''.join([f"genre={x}&" for x in self.request.GET.getlist("genre")])
+        return context
+
 
 
 
