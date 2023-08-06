@@ -53,11 +53,18 @@ class DeveloperView(GenreYear, DetailView):
 
 class FilterGamesView(GenreYear, ListView):
     def get_queryset(self):
-        queryset = Game.objects.filter(
-            Q(year__in=self.request.GET.getlist("year")) |
-            Q(genres__in=self.request.GET.getlist("genre"))
-        )
+        if 'genre' in self.request.GET and 'year' in self.request.GET:
+            print('if genre and year')
+            queryset = Game.objects.filter(
+                Q(year__in=self.request.GET.getlist("year")), Q(genres__in=self.request.GET.getlist("genre"))
+            )
+        else:
+            print('else')
+            queryset = Game.objects.filter(
+                Q(year__in=self.request.GET.getlist("year")) | Q(genres__in=self.request.GET.getlist("genre"))
+            )
         return queryset
+
 
 
 class AddTopRating(View):
