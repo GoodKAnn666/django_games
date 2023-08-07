@@ -8,7 +8,6 @@ from .models import Game, Category, Developer, Genre, Rating
 from .forms import ReviewForm, RatingForm
 
 
-
 class GenreYear:
     def get_genres(self):
         return Genre.objects.all()
@@ -16,12 +15,12 @@ class GenreYear:
     def get_years(self):
         return Game.objects.filter(draft=False).values("year")
 
+
 class GamesView(GenreYear, ListView):
     model = Game
     queryset = Game.objects.filter(draft=False)
     template_name = "games/game_list.html"
     paginate_by = 2
-
 
 
 class GameDetailView(GenreYear, DetailView):
@@ -32,7 +31,6 @@ class GameDetailView(GenreYear, DetailView):
         context = super().get_context_data(**kwargs)
         context["top_form"] = RatingForm()
         return context
-
 
 
 class AddReview(View):
@@ -54,6 +52,7 @@ class DeveloperView(GenreYear, DetailView):
 
 class FilterGamesView(GenreYear, ListView):
     paginate_by = 1
+
     def get_queryset(self):
         if 'genre' in self.request.GET and 'year' in self.request.GET:
             print('if genre and year')
@@ -67,14 +66,11 @@ class FilterGamesView(GenreYear, ListView):
             ).distinct()
         return queryset
 
-
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context["year"] = ''.join([f"year={x}&" for x in self.request.GET.getlist("year")])
         context["genre"] = ''.join([f"genre={x}&" for x in self.request.GET.getlist("genre")])
         return context
-
-
 
 
 class AddTopRating(View):
@@ -102,6 +98,7 @@ class AddTopRating(View):
 class Search(ListView):
     """Поиск игр через кнопку 'поиск' """
     paginate_by = 3
+
     def get_queryset(self):
         return Game.objects.filter(title__icontains=self.request.GET.get("q"))
 

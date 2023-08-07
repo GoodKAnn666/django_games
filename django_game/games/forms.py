@@ -2,6 +2,7 @@ from django import forms
 
 from .models import Reviews, Rating, TopReating
 
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Reviews
@@ -16,3 +17,4 @@ class RatingForm(forms.ModelForm):
     class Meta:
         model = Rating
         fields = ("top",)
+
