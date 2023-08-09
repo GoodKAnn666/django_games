@@ -9,6 +9,7 @@ from .forms import ReviewForm, RatingForm
 
 
 class GenreYear:
+    """Жанры и года выхода игр"""
     def get_genres(self):
         return Genre.objects.all()
 
@@ -17,6 +18,7 @@ class GenreYear:
 
 
 class GamesView(GenreYear, ListView):
+    """Список игр"""
     model = Game
     queryset = Game.objects.filter(draft=False)
     template_name = "games/game_list.html"
@@ -24,6 +26,7 @@ class GamesView(GenreYear, ListView):
 
 
 class GameDetailView(GenreYear, DetailView):
+    """Полное описание игры"""
     model = Game
     slug_field = "url"
 
@@ -34,6 +37,7 @@ class GameDetailView(GenreYear, DetailView):
 
 
 class AddReview(View):
+    """Отзывы"""
     def post(self, request, pk):
         form = ReviewForm(request.POST)
         game = Game.objects.get(id=pk)
@@ -45,12 +49,14 @@ class AddReview(View):
 
 
 class DeveloperView(GenreYear, DetailView):
+    """Вывод информации о разработчике"""
     model = Developer
     template_name = "games/developer.html"
     slug_field = "name"
 
 
 class FilterGamesView(GenreYear, ListView):
+    """Фильтрация игр"""
     paginate_by = 1
 
     def get_queryset(self):
@@ -74,6 +80,7 @@ class FilterGamesView(GenreYear, ListView):
 
 
 class AddTopRating(View):
+    """Топ рейтинга"""
     def get_client_ip(self, request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:

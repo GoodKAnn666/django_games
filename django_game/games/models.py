@@ -1,8 +1,8 @@
-from audioop import reverse
 from django.urls import reverse
 from django.db import models
 
 class Category(models.Model):
+    """Категории"""
     name = models.CharField("Категория", max_length=150)
     description = models.TextField("Описание")
     url = models.SlugField(max_length=160, unique=True)
@@ -15,6 +15,7 @@ class Category(models.Model):
         verbose_name_plural = "Категории"
 
 class Developer(models.Model):
+    """Разработчик"""
     name = models.CharField("Название", max_length=100)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="Developers/")
@@ -32,6 +33,7 @@ class Developer(models.Model):
         verbose_name_plural = "Разработчики"
 
 class Genre(models.Model):
+    """Жанры"""
     name = models.CharField("Название", max_length=100)
     description = models.TextField("Описание")
     url = models.SlugField(max_length=160, unique=True)
@@ -44,6 +46,7 @@ class Genre(models.Model):
         verbose_name_plural = "Жанры"
 
 class Game(models.Model):
+    """Игры"""
     objects = None
     title = models.CharField("Название игры", max_length=100)
     tagline = models.CharField("Слоган", max_length=100, default='')
@@ -70,6 +73,7 @@ class Game(models.Model):
         verbose_name_plural = "Игры"
 
 class GameShorts(models.Model):
+    """Кадры из игры"""
     title = models.CharField("Заголовок", max_length=100)
     description = models.TextField("Описание")
     image = models.ImageField("Изображение", upload_to="game_shorts/")
@@ -83,6 +87,7 @@ class GameShorts(models.Model):
         verbose_name_plural = "Кадры из игры"
 
 class TopReating(models.Model):
+    """Топ рейтинга"""
     value = models.SmallIntegerField("Значение", default=0)
 
     def __str__(self):
@@ -93,6 +98,7 @@ class TopReating(models.Model):
         verbose_name_plural = "Топы рейтинга"
 
 class Rating(models.Model):
+    """Рейтинг"""
     ip = models.CharField("IP адрес", max_length=15)
     top = models.ForeignKey(TopReating, on_delete=models.CASCADE, verbose_name="топ")
     game = models.ForeignKey(Game, on_delete=models.CASCADE, verbose_name="игра", related_name="ratings")
@@ -105,6 +111,7 @@ class Rating(models.Model):
         verbose_name_plural = "Рейтинги"
 
 class Reviews(models.Model):
+    """Отзывы"""
     email = models.EmailField()
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Сообщение", max_length=5000)
